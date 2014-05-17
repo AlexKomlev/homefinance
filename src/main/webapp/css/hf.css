@@ -1,0 +1,26 @@
+.pagetitle {
+    font: Arial;
+    font-size: 14pt;
+}
+
+table.payments {
+    width: 100%;
+    border: 1px #000000 solid;
+    border-collapse: collapse;
+}
+
+table.payments th, table.payments tr, table.payments td {
+    border: 1px solid #000000;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #D2E0E6;
+}
+
+.scroller {
+    width: 60%;
+    height: 400px;
+    display:block;
+    overflow: auto;
+}
