@@ -1,11 +1,10 @@
 package org.komlev.hf.dao.impl;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SizeExpression;
 import org.komlev.hf.dao.TransactionDao;
+import org.komlev.hf.domain.FinTransaction;
 import org.komlev.hf.domain.TransactionDirection;
 import org.komlev.hf.domain.TransactionType;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -42,7 +41,7 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
         }
         return transactionTypes;
     }
-
+//session.createQuery("select a from  FinTransaction a").list()
     @Override
     /**
      * {@inheritDoc}
@@ -59,5 +58,21 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
             transaction.rollback();
         }
         return result;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<FinTransaction> getTransactions() {
+        Session session = getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        List<FinTransaction> transactions= null;
+        try {
+            transaction.begin();
+            transactions = session.createCriteria(FinTransaction.class).list();
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+        }
+        return transactions;
     }
 }

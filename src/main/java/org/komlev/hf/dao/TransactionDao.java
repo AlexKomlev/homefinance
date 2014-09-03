@@ -1,5 +1,6 @@
 package org.komlev.hf.dao;
 
+import org.komlev.hf.domain.FinTransaction;
 import org.komlev.hf.domain.TransactionDirection;
 import org.komlev.hf.domain.TransactionType;
 
@@ -16,4 +17,6 @@ public interface TransactionDao {
     List<TransactionType> getTransactionTypes(TransactionDirection direction);
 
     TransactionType getTransactionType(Long ttId);
+
+    List<FinTransaction> getTransactions();
 }

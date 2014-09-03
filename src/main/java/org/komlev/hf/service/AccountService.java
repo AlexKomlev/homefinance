@@ -4,6 +4,8 @@ import org.komlev.hf.dao.AccountDao;
 import org.komlev.hf.domain.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -53,7 +55,7 @@ public class AccountService {
         return accountDao.getAccount(id);
     }
 
-/*    public static void main(String[] args) {
+    public static void main(String[] args) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("/spring/appContext.xml");
         AccountService as = (AccountService) context.getBean("accountService");
@@ -62,5 +64,5 @@ public class AccountService {
         Account account = as.getAccount(1L);
         System.out.println(account.getDescription());
 
-    }*/
+    }
 }

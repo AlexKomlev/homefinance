@@ -14,6 +14,8 @@ public class TransactionType {
 
     private Long id;
 
+    private Long rank;
+
     private String name;
 
     private TransactionDirection direction;
@@ -40,6 +42,26 @@ public class TransactionType {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    /**
+     * Getter for property 'rank'.
+     *
+     * @return Value for property 'rank'.
+     */
+    @Column(name="TRANSACTION_TYPE_RANK")
+    public Long getRank() {
+        return rank;
+    }
+
+    /**
+     * Setter for property 'rank'.
+     *
+     * @param rank Value to set for property 'rank'.
+     */
+    public void setRank(Long rank) {
+        this.rank = rank;
     }
 
     /**

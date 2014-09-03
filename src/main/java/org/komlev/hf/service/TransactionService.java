@@ -1,6 +1,7 @@
 package org.komlev.hf.service;
 
 import org.komlev.hf.dao.TransactionDao;
+import org.komlev.hf.domain.FinTransaction;
 import org.komlev.hf.domain.TransactionDirection;
 import org.komlev.hf.domain.TransactionType;
 import org.slf4j.Logger;
@@ -23,8 +24,8 @@ public class TransactionService {
 
 
     /**
-     * Logger.
-     */
+    * Logger.
+    */
     private static Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     /**
@@ -38,11 +39,17 @@ public class TransactionService {
         return transactionDao.getTransactionTypes(direction);
     }
 
+
+    public List<FinTransaction> getTransactions() {
+//        LOGGER.info("Retrieve all types for direction {}", direction);
+        return transactionDao.getTransactions();
+    }
+
     public static void main(String[] args) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("/spring/appContext.xml");
         TransactionService ts = (TransactionService) context.getBean("transactionService");
-        List<TransactionType> tts = ts.getTransactionTypes(TransactionDirection.R);
+        List<FinTransaction> tts = ts.getTransactions();
         System.out.println(tts.size());
     }
 }

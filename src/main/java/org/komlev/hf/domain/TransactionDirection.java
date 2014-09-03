@@ -7,8 +7,8 @@ package org.komlev.hf.domain;
  * @version 03.08.2014
  */
 public enum TransactionDirection {
-    R("Receive"),
-    D("Deliver"),
+    I("Incoming"),
+    O("Outgoing"),
     T("Transfer");
 
     private final String description;
