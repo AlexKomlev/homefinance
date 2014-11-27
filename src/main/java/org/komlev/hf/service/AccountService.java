@@ -2,6 +2,7 @@ package org.komlev.hf.service;
 
 import org.komlev.hf.dao.AccountDao;
 import org.komlev.hf.domain.Account;
+import org.komlev.hf.domain.AccountTypeE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -54,15 +55,23 @@ public class AccountService {
         LOGGER.info("Retrieve account with id {}.", id);
         return accountDao.getAccount(id);
     }
+    /**
+     * Returns of specified account by Id.
+     *
+     * @param name Account's name
+     * @return Account instance.
+     */
+    public Account getAccount(String name) {
+        Assert.notNull(name, "Name is empty");
+        LOGGER.info("Retrieve account with name {}.", name);
+        return accountDao.getAccount(name);
+    }
 
     public static void main(String[] args) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("/spring/appContext.xml");
         AccountService as = (AccountService) context.getBean("accountService");
-        List<Account> acc = as.getAccounts();
-        System.out.println(acc.size());
-        Account account = as.getAccount(1L);
-        System.out.println(account.getDescription());
-
+        Account acc = as.getAccount("citi_debit");
+        System.out.println(acc);
     }
 }

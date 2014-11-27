@@ -1,19 +1,13 @@
 package org.komlev.hf.domain;
 
-import org.hibernate.annotations.NamedQuery;
-
 import javax.persistence.*;
 
 /**
- * Description.
+ * Accounts' entity.
  *
  * @author <a href="mailto:AlexKomlev@rambler.ru">Aleksey Komlev</a>
- * @version 24.05.2014
+ * @version 27.11.2014
  */
-@NamedQuery(
-        name = "getAccounts",
-        query = "from Account"
-)
 @Entity
 @Table(name = "ACCOUNTS")
 public class Account {
@@ -22,11 +16,11 @@ public class Account {
 
     private String name;
 
-    private AccountType accountType;
+    private AccountTypeE accountType;
 
-    private Integer debitRate;
+    private Long creditRate;
 
-    private Integer debitLimit;
+    private Long accountLimit;
 
     private String description;
 
@@ -56,7 +50,7 @@ public class Account {
      *
      * @return Value for property 'name'.
      */
-    @Column(name = "ACCOUNT_NAME")
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
@@ -75,9 +69,9 @@ public class Account {
      *
      * @return Value for property 'accountType'.
      */
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_TYPE")
-    public AccountType getAccountType() {
+    @Column(name = "TYPE")
+    @Enumerated(EnumType.ORDINAL)
+    public AccountTypeE getAccountType() {
         return accountType;
     }
 
@@ -86,46 +80,46 @@ public class Account {
      *
      * @param accountType Value to set for property 'accountType'.
      */
-    public void setAccountType(AccountType accountType) {
+    public void setAccountType(AccountTypeE accountType) {
         this.accountType = accountType;
     }
 
     /**
-     * Getter for property 'debitRate'.
+     * Getter for property 'creditRate'.
      *
-     * @return Value for property 'debitRate'.
+     * @return Value for property 'creditRate'.
      */
-    @Column(name = "ACCOUNT_DEBIT_RATE")
-    public Integer getDebitRate() {
-        return debitRate;
+    @Column(name = "CREDIT_RATE")
+    public Long getCreditRate() {
+        return creditRate;
     }
 
     /**
-     * Setter for property 'debitRate'.
+     * Setter for property 'creditRate'.
      *
-     * @param debitRate Value to set for property 'debitRate'.
+     * @param creditRate Value to set for property 'creditRate'.
      */
-    public void setDebitRate(Integer debitRate) {
-        this.debitRate = debitRate;
+    public void setCreditRate(Long creditRate) {
+        this.creditRate = creditRate;
     }
 
     /**
-     * Getter for property 'debitLimit'.
+     * Getter for property 'accountLimit'.
      *
-     * @return Value for property 'debitLimit'.
+     * @return Value for property 'accountLimit'.
      */
-    @Column(name = "ACCOUNT_DEBIT_LIMIT")
-    public Integer getDebitLimit() {
-        return debitLimit;
+    @Column(name = "LIMIT")
+    public Long getAccountLimit() {
+        return accountLimit;
     }
 
     /**
-     * Setter for property 'debitLimit'.
+     * Setter for property 'accountLimit'.
      *
-     * @param debitLimit Value to set for property 'debitLimit'.
+     * @param accountLimit Value to set for property 'accountLimit'.
      */
-    public void setDebitLimit(Integer debitLimit) {
-        this.debitLimit = debitLimit;
+    public void setAccountLimit(Long accountLimit) {
+        this.accountLimit = accountLimit;
     }
 
     /**
@@ -133,7 +127,7 @@ public class Account {
      *
      * @return Value for property 'description'.
      */
-    @Column(name = "ACCOUNT_DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
