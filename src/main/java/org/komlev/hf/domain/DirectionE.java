@@ -4,11 +4,11 @@ package org.komlev.hf.domain;
  * Description.
  *
  * @author <a href="mailto:AlexKomlev@rambler.ru">Aleksey Komlev</a>
- * @version 19.11.2014
+ * @version 29.11.2014
  */
-public enum AccountTypeE {
-    CASH,
-    DEBIT,
-    CREDIT,
-    STREET
+public enum DirectionE {
+    INCOMING,
+    OUTGOING,
+    UNIVERSAL,
+    TRANSFER
 }

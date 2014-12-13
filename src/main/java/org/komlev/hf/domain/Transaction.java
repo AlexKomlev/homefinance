@@ -7,19 +7,19 @@ import java.util.Date;
  * Description.
  *
  * @author <a href="mailto:AlexKomlev@rambler.ru">Aleksey Komlev</a>
- * @version 03.09.2014
+ * @version 28.11.2014
  */
 @Entity
 @Table(name = "TRANSACTIONS")
-public class FinTransaction {
+public class Transaction {
 
     private Long id;
 
-    private Account deliverAccount;
+    private Account sourceAccount;
 
-    private Account receiveAccount;
+    private Account destinationAccount;
 
-    private TransactionType transactionType;
+    private TransactionType type;
 
     private Date transactionDate;
 
@@ -39,33 +39,33 @@ public class FinTransaction {
     }
 
     @ManyToOne
-    @JoinColumn(name = "TRANSACTION_DELIVER_ACCOUNT")
-    public Account getDeliverAccount() {
-        return deliverAccount;
+    @JoinColumn(name = "SOURCE_ACCOUNT")
+    public Account getSourceAccount() {
+        return sourceAccount;
     }
 
-    public void setDeliverAccount(Account deliverAccount) {
-        this.deliverAccount = deliverAccount;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "TRANSACTION_RECEIVE_ACCOUNT")
-    public Account getReceiveAccount() {
-        return receiveAccount;
-    }
-
-    public void setReceiveAccount(Account receiveAccount) {
-        this.receiveAccount = receiveAccount;
+    public void setSourceAccount(Account sourceAccount) {
+        this.sourceAccount = sourceAccount;
     }
 
     @ManyToOne
-    @JoinColumn(name = "TRANSACTION_TYPE")
-    public TransactionType getTransactionType() {
-        return transactionType;
+    @JoinColumn(name = "DESTINATION_ACCOUNT")
+    public Account getDestinationAccount() {
+        return destinationAccount;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
+    public void setDestinationAccount(Account destinationAccount) {
+        this.destinationAccount = destinationAccount;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "TYPE")
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
     @Column(name = "TRANSACTION_DATE")
@@ -77,7 +77,7 @@ public class FinTransaction {
         this.transactionDate = transactionDate;
     }
 
-    @Column(name = "TRANSACTION_VALUE")
+    @Column(name = "VALUE")
     public Long getTransactionValue() {
         return transactionValue;
     }
@@ -86,7 +86,7 @@ public class FinTransaction {
         this.transactionValue = transactionValue;
     }
 
-    @Column(name = "TRANSACTION_DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }

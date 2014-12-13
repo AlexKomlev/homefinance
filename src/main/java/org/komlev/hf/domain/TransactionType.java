@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Transaction Type entity.
  *
  * @author <a href="mailto:AlexKomlev@rambler.ru">Aleksey Komlev</a>
- * @version 27.07.2014
+ * @version 28.11.2014
  */
 @Entity
 @Table(name = "TRANSACTION_TYPES")
@@ -14,14 +14,11 @@ public class TransactionType {
 
     private Long id;
 
-    private Long rank;
-
     private String name;
 
-    private TransactionDirection direction;
+    private DirectionE direction;
 
     private String description;
-
 
     /**
      * Getter for property 'id'.
@@ -44,32 +41,12 @@ public class TransactionType {
         this.id = id;
     }
 
-
-    /**
-     * Getter for property 'rank'.
-     *
-     * @return Value for property 'rank'.
-     */
-    @Column(name="TRANSACTION_TYPE_RANK")
-    public Long getRank() {
-        return rank;
-    }
-
-    /**
-     * Setter for property 'rank'.
-     *
-     * @param rank Value to set for property 'rank'.
-     */
-    public void setRank(Long rank) {
-        this.rank = rank;
-    }
-
     /**
      * Getter for property 'name'.
      *
      * @return Value for property 'name'.
      */
-    @Column(name="TRANSACTION_TYPE_NAME")
+    @Column(name="NAME")
     public String getName() {
         return name;
     }
@@ -88,9 +65,9 @@ public class TransactionType {
      *
      * @return Value for property 'direction'.
      */
-    @Column(name="TRANSACTION_DIRECTION")
-    @Enumerated(EnumType.STRING)
-    public TransactionDirection getDirection() {
+    @Column(name = "DIRECTION")
+    @Enumerated(EnumType.ORDINAL)
+    public DirectionE getDirection() {
         return direction;
     }
 
@@ -99,7 +76,7 @@ public class TransactionType {
      *
      * @param direction Value to set for property 'direction'.
      */
-    public void setDirection(TransactionDirection direction) {
+    public void setDirection(DirectionE direction) {
         this.direction = direction;
     }
 
@@ -108,7 +85,7 @@ public class TransactionType {
      *
      * @return Value for property 'description'.
      */
-    @Column(name="TRANSACTION_TYPE_DESCRIPTION")
+    @Column(name="DESCRIPTION")
     public String getDescription() {
         return description;
     }

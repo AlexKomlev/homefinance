@@ -1,9 +1,10 @@
 package org.komlev.hf.dao;
 
-import org.komlev.hf.domain.FinTransaction;
-import org.komlev.hf.domain.TransactionDirection;
+import org.hibernate.criterion.Criterion;
+import org.komlev.hf.domain.Transaction;
 import org.komlev.hf.domain.TransactionType;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,9 +15,16 @@ import java.util.List;
  */
 public interface TransactionDao {
 
-    List<TransactionType> getTransactionTypes(TransactionDirection direction);
+    List<TransactionType> getTransactionTypes(Criterion filter);
 
+    /**
+     * .
+     * @param ttId
+     * @return
+     */
     TransactionType getTransactionType(Long ttId);
 
-    List<FinTransaction> getTransactions();
+    List<Transaction> getTransactions();
+
+    Long createTransaction(Transaction transaction);
 }

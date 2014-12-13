@@ -32,11 +32,11 @@ public class AccountController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public TableData getAllAccounts(HttpServletRequest request) {
+    public List<Account> getAllAccounts() { //HttpServletRequest request
+//        String echo = request.getParameter("sEcho");
+//        int iecho = Integer.parseInt(echo);
         List<Account> accounts = accountService.getAccounts();
-        String echo = request.getParameter("sEcho");
-        int iecho = Integer.parseInt(echo);
-        return new TableData(iecho, accounts.size(), accounts.size(), accounts);
+        return accounts;
     }
 
 }

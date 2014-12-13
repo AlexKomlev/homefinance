@@ -73,5 +73,7 @@ public class AccountService {
         AccountService as = (AccountService) context.getBean("accountService");
         Account acc = as.getAccount("citi_debit");
         System.out.println(acc);
+        List<Account> accounts = as.getAccounts();
+        System.out.println(accounts.size());
     }
 }
