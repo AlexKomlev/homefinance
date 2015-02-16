@@ -39,6 +39,24 @@ public class AccountDaoImpl extends HibernateDaoSupport implements AccountDao {
         return accounts;
     }
 
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Account> getAccounts(AccountTypeE accountTypeE) {
+        Session session = getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        List<Account> accounts = null;
+        try {
+            transaction.begin();
+            accounts = session.createCriteria(Account.class).add(Restrictions.eq("accountType", accountTypeE)).list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+        }
+        return accounts;
+
+    }
+
     @Override
     /**
      * {@inheritDoc}

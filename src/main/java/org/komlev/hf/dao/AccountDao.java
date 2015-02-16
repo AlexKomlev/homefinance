@@ -35,4 +35,6 @@ public interface AccountDao {
      * @return Account object.
      */
     Account getAccount(String name);
+
+    List<Account> getAccounts(AccountTypeE accountTypeE);
 }

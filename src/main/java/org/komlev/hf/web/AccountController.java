@@ -20,7 +20,7 @@ import java.util.List;
  * @version 01.06.2014
  */
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/accounts")
 public class AccountController {
     @Autowired
     AccountService accountService;

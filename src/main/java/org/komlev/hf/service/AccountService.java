@@ -67,6 +67,13 @@ public class AccountService {
         return accountDao.getAccount(name);
     }
 
+    public List<Account> findAccountByType(AccountTypeE accountTypeE) {
+        Assert.notNull(accountTypeE, "Type is empty");
+        LOGGER.info("Retrieve account with type {}.", accountTypeE);
+        return accountDao.getAccounts(accountTypeE);
+
+    }
+
     public static void main(String[] args) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("/spring/appContext.xml");

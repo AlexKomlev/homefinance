@@ -4,10 +4,8 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.komlev.hf.dao.AccountDao;
 import org.komlev.hf.dao.TransactionDao;
-import org.komlev.hf.domain.AccountTypeE;
-import org.komlev.hf.domain.DirectionE;
-import org.komlev.hf.domain.Transaction;
-import org.komlev.hf.domain.TransactionType;
+import org.komlev.hf.domain.*;
+import org.komlev.hf.validators.TransactionValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +42,10 @@ public class TransactionService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private List<TransactionValidator> validators;
+
+
     public List<TransactionType> getTransactionTypes(DirectionE direction) {
         Criterion filter = null;
         if (direction == null) {
@@ -61,29 +63,36 @@ public class TransactionService {
         return transactionDao.getTransactions();
     }
 
-    public void createTransaction(Date transactionDate, Long transactionType, Long sourceAccount, Long destAccount,
+    public Long createTransaction(Date transactionDate, Long transactionType, Long sourceAccountId, Long destAccountId,
                                   Long amount, String description) {
         Assert.notNull(transactionDate, "Transaction date should be defined");
         Assert.notNull(transactionType, "Transaction type should be defined");
         Assert.isTrue(amount != null && amount > 0, "Amount should be greater than 0");
-        Assert.isTrue(sourceAccount != null || destAccount != null, "Source or destination account should be set");
+        Assert.isTrue(sourceAccountId != null || destAccountId != null, "Source or destination account should be set");
 
-        Long streetId = accountService.getAccount(AccountTypeE.STREET.name()).getId();
+        List<Account> streetAccountList = accountService.findAccountByType(AccountTypeE.STREET);
+        Assert.notEmpty(streetAccountList, "There are no street accounts.");
+        Account streetAccount = streetAccountList.get(0);
 
-        Long destAccId = destAccount == null ? streetId : destAccount;
-        Long sourceAccId = sourceAccount == null ? streetId : sourceAccount;;
+        Account sourceAccount = accountService.getAccount(sourceAccountId);
+        Account destAccount = accountService.getAccount(destAccountId);
+
+        for (TransactionValidator validator : validators){
+            validator.validate(sourceAccount);
+        }
 
         //todo add check for account current balance
 
         Transaction transaction = new Transaction();
         transaction.setTransactionDate(transactionDate);
         transaction.setType(transactionDao.getTransactionType(transactionType));
-        transaction.setSourceAccount(accountService.getAccount(sourceAccId));
-        transaction.setDestinationAccount(accountService.getAccount(destAccId));
+        transaction.setSourceAccount(sourceAccount == null ? streetAccount : sourceAccount);
+        transaction.setDestinationAccount(destAccount == null ? streetAccount : destAccount);
         transaction.setTransactionValue(amount);
         transaction.setDescription(description);
-        Long result = transactionDao.createTransaction(transaction);
-
+//        Long result = transactionDao.createTransaction(transaction);
+        //todo return transaction status. Will be updated after validation implementation.
+        return 0L;
     }
 
     public static void main(String[] args) {
