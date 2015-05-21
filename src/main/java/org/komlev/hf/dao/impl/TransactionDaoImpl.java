@@ -78,14 +78,15 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
     @Override
     public Long createTransaction(Transaction transaction) {
         Session session = getSessionFactory().getCurrentSession();
-        org.hibernate.Transaction hbTransaction = session.getTransaction();
+        org.hibernate.Transaction hbt = session.getTransaction();
         try {
-            hbTransaction.begin();
+            hbt.begin();
             session.save(transaction);
-            hbTransaction.commit();
+            hbt.commit();
         } catch (Exception e) {
             //todo add error log
-            hbTransaction.rollback();
+            hbt.rollback();
+            return -1L;
         }
         return transaction.getId();
     }

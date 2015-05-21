@@ -90,7 +90,7 @@ public class TransactionService {
         transaction.setDestinationAccount(destAccount == null ? streetAccount : destAccount);
         transaction.setTransactionValue(amount);
         transaction.setDescription(description);
-//        Long result = transactionDao.createTransaction(transaction);
+        Long result = transactionDao.createTransaction(transaction);
         //todo return transaction status. Will be updated after validation implementation.
         return 0L;
     }
