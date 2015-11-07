@@ -9,6 +9,7 @@ import org.komlev.hf.domain.TransactionType;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Description.
@@ -18,7 +19,6 @@ import java.util.List;
  */
 public class TransactionDaoImpl extends HibernateDaoSupport implements TransactionDao {
 
-    @Override
     @SuppressWarnings("unchecked")
     /**
      * {@inheritDoc}
@@ -41,7 +41,6 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
         return transactionTypes;
     }
 
-    @Override
     /**
      * {@inheritDoc}
      */
@@ -59,7 +58,6 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
         return result;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public List<Transaction> getTransactions() {
         Session session = getSessionFactory().getCurrentSession();
@@ -75,7 +73,6 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
         return transactions;
     }
 
-    @Override
     public Long createTransaction(Transaction transaction) {
         Session session = getSessionFactory().getCurrentSession();
         org.hibernate.Transaction hbt = session.getTransaction();

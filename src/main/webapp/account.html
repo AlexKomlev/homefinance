@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <title>Счета</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="js/jquery-2.1.4.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#mytable').dataTable({
+                        "info": false,
+                        "paging": false,
+                        "searching": false,
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": {
+                            "url": "http://localhost:8080/homefinance/api/accounts",
+                            "dataSrc": ""
+                        },
+                        "columns": [
+                            {"data": "id"},
+                            {"data": "name"},
+//                            {"data": "accountType.name"},
+                            {"data": "creditRate"},
+                            {"data": "accountLimit"},
+                            {"data": "description"}
+                        ]
+                    }
+            );
+        });
+
+    </script>
+</head>
+<body>
+<table class="display" id="mytable" border="1" width="40%">
+    <thead>
+    <th>#</th>
+    <th>Имя</th>
+    <th>Ставка</th>
+    <th>Лимит</th>
+    <th>Описание</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>Имя</td>
+        <td>0</td>
+        <td>0</td>
+        <td>Описание</td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

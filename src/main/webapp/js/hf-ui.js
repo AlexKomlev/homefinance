@@ -16,25 +16,27 @@ function prepareSelelect(selectId, data, idName, valName) {
     $(selectId).empty();
     for (var i in data) {
         var elem = data[i];
+        //TODO add selected elem
         $(selectId).append(new Option(elem[valName], elem[idName]));
     }
 }
-    function prepareTable(tableId, data, headers) {
-        var cellData;
-        for(var i in data){
-            var elem = data[i];
-            var column = '<tr>';
-            for (var j in headers){
-                if(typeof headers[j].perform != 'undefined'){
-                    cellData = headers[j].perform(elem[headers[j].id]);
-                } else {
-                    cellData = elem[headers[j].id];
-                }
-                column = column + '<td>' + cellData + '</td>';
+
+function prepareTable(tableId, data, headers) {
+    var cellData;
+    for (var i in data) {
+        var elem = data[i];
+        var column = '<tr>';
+        for (var j in headers) {
+            if (typeof headers[j].perform != 'undefined') {
+                cellData = headers[j].perform(elem[headers[j].id]);
+            } else {
+                cellData = elem[headers[j].id];
             }
-            column = column + '</tr>';
-            $(tableId).append(column);
+            column = column + '<td>' + cellData + '</td>';
         }
+        column = column + '</tr>';
+        $(tableId).append(column);
+    }
 
 }
 

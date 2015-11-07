@@ -9,6 +9,7 @@ import org.komlev.hf.dao.AccountDao;
 import org.komlev.hf.domain.Account;
 import org.komlev.hf.domain.AccountTypeE;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ import java.util.List;
  */
 public class AccountDaoImpl extends HibernateDaoSupport implements AccountDao {
 
-    @Override
     @SuppressWarnings("unchecked")
     /**
      * {@inheritDoc}
@@ -39,8 +39,6 @@ public class AccountDaoImpl extends HibernateDaoSupport implements AccountDao {
         return accounts;
     }
 
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<Account> getAccounts(AccountTypeE accountTypeE) {
         Session session = getSessionFactory().getCurrentSession();
@@ -57,7 +55,6 @@ public class AccountDaoImpl extends HibernateDaoSupport implements AccountDao {
 
     }
 
-    @Override
     /**
      * {@inheritDoc}
      */
@@ -75,7 +72,6 @@ public class AccountDaoImpl extends HibernateDaoSupport implements AccountDao {
         return result;
     }
 
-    @Override
     /**
      * {@inheritDoc}
      */

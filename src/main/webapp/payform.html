@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jQuery UI Dialog - Default functionality</title>
+
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+    <script type="text/javascript" charset="utf8" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/hf-ui.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/hf.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#dialog").dialog({
+                autoOpen: true, width: 600, height: 450, buttons: {
+                    "Submit": function () {
+                        $(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+
+            $("#inputDate").datepicker({showOn: "button", firstDay: 1}).datepicker("setDate", new Date());
+
+            populateTransactionTypes();
+            populateAccounts();
+        });
+
+        function populateTransactionTypes() {
+            hfAjax("GET", "http://localhost:8080/homefinance/api/transactions/types?direction=OUTGOING", function (data) {
+                prepareSelelect("#idSelectPayType", data, "id", "description");
+            }, function (error) {
+                alert(error)
+            })
+        }
+
+        function populateAccounts() {
+            hfAjax("GET", "http://localhost:8080/homefinance/api/accounts", function (data) {
+                prepareSelelect("#idSelectAccount", data, "id", "description");
+            }, function (error) {
+                alert(error)
+            })
+        }
+
+    </script>
+
+
+</head>
+<body>
+<div id="dialog" title="Добавить платеж">
+    <form>
+        <fieldset>
+            <label for="inputDate" style="display:inline-block; width: 200px">Дата платежа</label>
+            <input type="text" name="inputDate" id="inputDate">
+
+            <p>
+                <label for="idSelectPayType" style="display:inline-block; width: 200px">Назначение платежа</label>
+                <select id="idSelectPayType">
+                        <option value="1" selected>Квартплата</option>
+                        <option value="2">Питание</option>
+                        <option value="3">Траспорт</option>
+                </select>
+            <p>
+                <label for="idSelectAccount" style="display:inline-block; width: 200px">Счет</label>
+                <select id="idSelectAccount">
+                        <option value="1" selected>Квартплата</option>
+                        <option value="2">Питание</option>
+                        <option value="3">Траспорт</option>
+                </select>
+            <p>
+                <label for="inputSumm" style="display:inline-block; width: 200px">Сумма платежа</label>
+                <input type="text" name="inputSumm" id="inputSumm">
+
+            <p>
+                <label for="descr" style="display:inline-block; width: 200px">Примечания</label>
+                <textarea rows="5" cols="50" name="desc" id="descr"></textarea>
+        </fieldset>
+    </form>
+</div>
+
+</body>
+</html>

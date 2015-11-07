@@ -2,7 +2,6 @@ package org.komlev.hf.service;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.komlev.hf.dao.AccountDao;
 import org.komlev.hf.dao.TransactionDao;
 import org.komlev.hf.domain.*;
 import org.komlev.hf.validators.TransactionValidator;
@@ -74,12 +73,14 @@ public class TransactionService {
         Assert.notEmpty(streetAccountList, "There are no street accounts.");
         Account streetAccount = streetAccountList.get(0);
 
-        Account sourceAccount = accountService.getAccount(sourceAccountId);
-        Account destAccount = accountService.getAccount(destAccountId);
+        final Account sourceAccount = sourceAccountId != null ? accountService.getAccount(sourceAccountId) : null;
+        Account destAccount = destAccountId != null ? accountService.getAccount(destAccountId) : null;
 
-        for (TransactionValidator validator : validators){
-            validator.validate(sourceAccount);
-        }
+        validators.forEach((validator)->validator.validate(sourceAccount));
+
+//        for (TransactionValidator validator : validators){
+//            validator.validate(sourceAccount);
+//        }
 
         //todo add check for account current balance
 
@@ -92,14 +93,15 @@ public class TransactionService {
         transaction.setDescription(description);
         Long result = transactionDao.createTransaction(transaction);
         //todo return transaction status. Will be updated after validation implementation.
-        return 0L;
+        return result;
     }
 
     public static void main(String[] args) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("/spring/appContext.xml");
         TransactionService ts = (TransactionService) context.getBean("transactionService");
-        List<TransactionType> tt = ts.getTransactionTypes(DirectionE.INCOMING); //
-        System.out.println(tt.size());
+//        for(int i = 6; i < 17; i++)
+        ts.createTransaction(new Date(), (long) 2, 1L, null, 10000L, null);
+        System.exit(0);
     }
 }

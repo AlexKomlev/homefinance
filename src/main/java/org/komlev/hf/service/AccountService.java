@@ -67,11 +67,16 @@ public class AccountService {
         return accountDao.getAccount(name);
     }
 
+    /**
+     * Returns list of accounts by specified type.
+     *
+     * @param accountTypeE Account type.
+     * @return List of Accounts
+     */
     public List<Account> findAccountByType(AccountTypeE accountTypeE) {
         Assert.notNull(accountTypeE, "Type is empty");
         LOGGER.info("Retrieve account with type {}.", accountTypeE);
         return accountDao.getAccounts(accountTypeE);
-
     }
 
     public static void main(String[] args) {

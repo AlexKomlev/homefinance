@@ -36,5 +36,11 @@ public interface AccountDao {
      */
     Account getAccount(String name);
 
+    /**
+     * Returns list of accounts by specified type.
+     *
+     * @param accountTypeE Account type.
+     * @return List of Accounts
+     */
     List<Account> getAccounts(AccountTypeE accountTypeE);
 }

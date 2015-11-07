@@ -1,16 +1,15 @@
 /**
- * Created with IntelliJ IDEA.
- * User: Пользователь
- * Date: 27.06.13
- * Time: 22:54
- * To change this template use File | Settings | File Templates.
+ * Home Finance javascript library.
+ *
+ * @author <a href="mailto:AlexKomlev@rambler.ru">Aleksey Komlev</a>
+ * @version 25.10.2015
  */
 
 /**
- * SSS.
- * @param data
- * @param hidden
- * @returns {string}
+ * Creates TD element.
+ * @param data TD content
+ * @param hidden flag that element is hidden
+ * @returns TD element
  */
 function withTd(data, hidden) {
     if (hidden == true) {

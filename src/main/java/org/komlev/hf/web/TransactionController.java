@@ -1,15 +1,15 @@
 package org.komlev.hf.web;
 
 import org.komlev.hf.domain.Account;
+import org.komlev.hf.domain.DirectionE;
+import org.komlev.hf.domain.TransactionType;
 import org.komlev.hf.json.Transaction;
 import org.komlev.hf.service.AccountService;
 import org.komlev.hf.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -33,6 +33,19 @@ public class TransactionController {
         return transactionService.createTransaction(transaction.getDate(), transaction.getType(),
                 transaction.getSource(), transaction.getDestination(), transaction.getAmount(),
                 transaction.getDescription());
+    }
+
+    @RequestMapping(value = "incoming", method = RequestMethod.GET)
+    @ResponseBody
+    public List<org.komlev.hf.domain.Transaction> getTransaction(@RequestParam("direction") String direction) {
+        return transactionService.getTransactions();
+    }
+
+    @RequestMapping(value = "types", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TransactionType> getTransactionTypes(@RequestParam("direction") String direction) {
+        DirectionE dirE = DirectionE.valueOf(direction);
+        return transactionService.getTransactionTypes(dirE);
     }
 
 }
