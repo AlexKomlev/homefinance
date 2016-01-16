@@ -1,6 +1,5 @@
 package org.komlev.hf.service;
 
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.komlev.hf.dao.TransactionDao;
 import org.komlev.hf.domain.*;
@@ -15,17 +14,18 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Description.
+ * Transaction Service.
  *
  * @author <a href="mailto:AlexKomlev@rambler.ru">Aleksey Komlev</a>
- * @version 03.08.2014
+ * @version 17.01.2016
  */
 @Service
 public class TransactionService {
-
 
     /**
      * Logger.
@@ -45,23 +45,58 @@ public class TransactionService {
     private List<TransactionValidator> validators;
 
 
+    /**
+     * Returns Transaction types for specified direction.
+     *
+     * @param direction transactions' direction.
+     * @return List of transaction types.
+     */
     public List<TransactionType> getTransactionTypes(DirectionE direction) {
-        Criterion filter = null;
+        HomeFilter filter = null;
         if (direction == null) {
             LOGGER.info("Retrieve all types");
         } else {
+            filter = new HomeFilter();
             LOGGER.info("Retrieve for {}", direction);
-            filter = Restrictions.eq("direction", direction);
+            filter.setFilter(Restrictions.eq("direction", direction));
         }
         return transactionDao.getTransactionTypes(filter);
     }
 
-
-    public List<Transaction> getTransactions() {
-//        LOGGER.info("Retrieve all types for direction {}", direction);
-        return transactionDao.getTransactions();
+    /**
+     * Returns Transactions for specified direction.
+     *
+     * @param direction transactions' direction.
+     * @return List of transactions.
+     */
+    public List<Transaction> getTransactions(DirectionE direction) {
+        HomeFilter filter = null;
+        if (direction == null) {
+            LOGGER.info("Retrieve all types");
+        } else {
+            //TODO Add filters, sorts and pages
+            LOGGER.info("Retrieve for {}", direction);
+            filter = new HomeFilter();
+            filter.setInitialAlias("trans");
+            Map<String, String> aliases = new HashMap<>();
+            aliases.put("trans.type", "type");
+            filter.setAliases(aliases);
+            filter.setFilter(Restrictions.eq("type.direction", direction));
+        }
+        return transactionDao.getTransactions(filter);
     }
 
+    /**
+     * Creates new Transaction.
+     *
+     * @param transactionDate Transaction Date.
+     * @param transactionType Transaction Type.
+     * @param sourceAccountId Source Account Id
+     * @param destAccountId   Destination Account Id
+     * @param amount          Amount
+     * @param description     Description
+     * @return TODO
+     */
     public Long createTransaction(Date transactionDate, Long transactionType, Long sourceAccountId, Long destAccountId,
                                   Long amount, String description) {
         Assert.notNull(transactionDate, "Transaction date should be defined");
@@ -76,11 +111,7 @@ public class TransactionService {
         final Account sourceAccount = sourceAccountId != null ? accountService.getAccount(sourceAccountId) : null;
         Account destAccount = destAccountId != null ? accountService.getAccount(destAccountId) : null;
 
-        validators.forEach((validator)->validator.validate(sourceAccount));
-
-//        for (TransactionValidator validator : validators){
-//            validator.validate(sourceAccount);
-//        }
+        validators.forEach((validator) -> validator.validate(sourceAccount));
 
         //todo add check for account current balance
 

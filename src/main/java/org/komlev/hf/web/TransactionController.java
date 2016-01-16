@@ -2,6 +2,7 @@ package org.komlev.hf.web;
 
 import org.komlev.hf.domain.Account;
 import org.komlev.hf.domain.DirectionE;
+import org.komlev.hf.domain.TableData;
 import org.komlev.hf.domain.TransactionType;
 import org.komlev.hf.json.Transaction;
 import org.komlev.hf.service.AccountService;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Description.
@@ -35,10 +38,16 @@ public class TransactionController {
                 transaction.getDescription());
     }
 
-    @RequestMapping(value = "incoming", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public List<org.komlev.hf.domain.Transaction> getTransaction(@RequestParam("direction") String direction) {
-        return transactionService.getTransactions();
+    public TableData<org.komlev.hf.domain.Transaction> getTransaction(@RequestParam("direction") String direction,
+                                                                      HttpServletRequest request) {
+        String echo = request.getParameter("draw");
+        int draw = Integer.valueOf(echo);
+
+        DirectionE directionE = DirectionE.valueOf(direction);
+        List<org.komlev.hf.domain.Transaction> transactions =  transactionService.getTransactions(directionE);
+        return new TableData<>(draw, transactions.size(), transactions.size(), transactions);
     }
 
     @RequestMapping(value = "types", method = RequestMethod.GET)

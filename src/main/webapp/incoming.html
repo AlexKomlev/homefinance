@@ -16,13 +16,14 @@
         $(document).ready(function () {
             $('#mytable').dataTable({
                         "info": false,
-                        "paging": false,
+                        "paging": true,
                         "searching": false,
                         "processing": true,
                         "serverSide": true,
+                        "sEcho": false,
                         "ajax": {
-                            "url": "http://localhost:8080/homefinance/api/transactions/incoming?direction=A",
-                            "dataSrc": ""
+                            "url": "http://localhost:8080/homefinance/api/transactions?direction=OUTGOING"
+//                            "dataSrc": ""
                         },
                         "columnDefs": [
                             {
