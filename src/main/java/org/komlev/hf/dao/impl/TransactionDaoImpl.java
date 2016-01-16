@@ -105,6 +105,7 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
                     criteria.setMaxResults(filter.getPageInfo().get("MaxResults"));
                 }
                 transactions = criteria.list();
+
             }
             transaction.commit();
         } catch (Exception e) {
