@@ -6,7 +6,7 @@ import org.komlev.hf.dao.TransactionDao;
 import org.komlev.hf.domain.HomeFilter;
 import org.komlev.hf.domain.Transaction;
 import org.komlev.hf.domain.TransactionType;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
